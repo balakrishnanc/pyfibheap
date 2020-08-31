@@ -34,7 +34,8 @@ class HeapNode:
     def cut(self, child):
         """Remove a given child."""
         self.children.rem(child)
-        # The following call will fail!
+        # Mark parent since it has lost a child!
+        self.mark()
         child.__parent = None
         return child
 
@@ -55,7 +56,8 @@ class HeapNode:
 
     def mark(self):
         """Mark node."""
-        self.__marked = True
+        if not self.__root:
+            self.__marked = True
 
     def unmark(self):
         """Unmark node."""
@@ -211,7 +213,6 @@ class FibonacciHeap:
 
         while parent and not parent.is_root:
             if not parent.is_marked:
-                parent.mark()
                 return repl
 
             child = parent
