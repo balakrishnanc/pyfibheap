@@ -6,7 +6,6 @@
 from linkedlist import CircDblLnkList
 
 import sys
-import weakref
 
 
 class HeapNode:
@@ -47,7 +46,7 @@ class HeapNode:
     def make_child_of(self, parent):
         """Make this node a child of another."""
         self.__root = False
-        self.__parent = weakref.ref(parent)
+        self.__parent = parent
 
     @property
     def is_root(self):
@@ -104,7 +103,7 @@ class HeapNode:
     @property
     def parent(self):
         """Return parent, if exists, of the node."""
-        return self.__parent() if self.__parent else None
+        return self.__parent
 
     def __lt__(self, other):
         if not other:
