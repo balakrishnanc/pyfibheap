@@ -3,8 +3,6 @@
 """Simple linked list implementation.
 """
 
-import weakref
-
 
 class CircDblLnkList:
     """Circular, doubly linked list."""
@@ -22,16 +20,16 @@ class CircDblLnkList:
 
         if self.__head:
             elem.next = self.__head
-            self.__head.prev = weakref.ref(elem)
+            self.__head.prev = elem
         else:
-            elem.next = weakref.ref(elem)
+            elem.next = elem
         self.__head = elem
 
         if self.__tail:
             self.__tail.next = elem
         else:
             self.__tail = elem
-        elem.prev = weakref.ref(self.__tail)
+        elem.prev = self.__tail
 
         # Update min. element.
         if not self.__min or self.__min > elem:
@@ -50,7 +48,7 @@ class CircDblLnkList:
             elem.unlink()
             return elem
 
-        elem.prev().next = elem.next
+        elem.prev.next = elem.next
         elem.next.prev = elem.prev
 
         # Update head if required.
@@ -59,7 +57,7 @@ class CircDblLnkList:
 
         # Update tail if required.
         if self.__tail == elem:
-            self.__tail = elem.prev()
+            self.__tail = elem.prev
 
         elem.unlink()
 
