@@ -17,7 +17,7 @@ class HeapNode:
         self.prev = None
         self.next = None
         self.__root = False
-        self.children = set()
+        self.children = CircDblLnkList()
         self.__parent = None
         self.__marked = False
 
@@ -29,11 +29,11 @@ class HeapNode:
     def link(self, child):
         """Add a child."""
         child.make_child_of(self)
-        self.children.add(child)
+        self.children.ins(child)
 
     def cut(self, child):
         """Remove a given child."""
-        self.children.remove(child)
+        self.children.rem(child)
         # The following call will fail!
         child.__parent = None
         return child
@@ -97,7 +97,7 @@ class HeapNode:
     @property
     def rank(self):
         """Return the node rank."""
-        return len(self.children)
+        return self.children.size
 
     @property
     def parent(self):
@@ -152,7 +152,10 @@ class FibonacciHeap:
 
     def __meld_children(self, root):
         """Meld children of the given root into the heap."""
-        for child in root.children:
+        # Do not use iterator to retrieve child elements,
+        # since they will be modified when they are inserted into the heap.
+        while not root.children.is_empty:
+            child = root.children.pop()
             self.add_tree(child)
 
     def __consolidate(self):
