@@ -160,3 +160,8 @@ class Cmplx2HeapTestCase(unittest.TestCase):
 
     def test_trees(self):
         self.assertEqual(self.fh.trees, self.exp_num_trees)
+
+
+def get_test_cases():
+    return [EmptyHeapTestCase, OneElemHeapTestCase, ManyElemHeapTestCase,
+        Cmplx1HeapTestCase, Cmplx2HeapTestCase]

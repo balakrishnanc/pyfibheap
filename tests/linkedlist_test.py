@@ -43,3 +43,7 @@ class BasicListTestCase(unittest.TestCase):
 
     def test_min_elem(self):
         self.assertEqual(self.lst.min_elem, self.min_elem)
+
+
+def get_test_cases():
+    return [EmptyListTestCase, BasicListTestCase]
